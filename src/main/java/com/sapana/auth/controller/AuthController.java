@@ -1,6 +1,8 @@
 package com.sapana.auth.controller;
 
 import com.sapana.auth.dto.RegisterRequest;
+import com.sapana.auth.dto.LoginResponse;
+import com.sapana.auth.dto.LoginRequest;
 import com.sapana.auth.entity.User;
 import com.sapana.auth.service.UserService;
 
@@ -24,6 +26,16 @@ public class AuthController {
         return userService.registerUser(user);
 
 
+    }
+    @PostMapping("/login")
+    public LoginResponse login( @RequestBody LoginRequest request){
+        boolean isValid=userService.loginUser( request.getEmail(),
+    request.getPassword());
+
+        if (isValid){
+         return new LoginResponse("Login successful");
+        }  
+        return new LoginResponse("Invalid Credentials");
     }
     
 }

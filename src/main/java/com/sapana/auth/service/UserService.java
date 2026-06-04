@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-   
+   @Autowired
     private UserRepository userRepository;
 
     public User registerUser(User user){
@@ -22,6 +22,15 @@ public class UserService {
 
         return userRepository.save(user);
     }
+
+    public boolean loginUser(String email, String password){
+
+        User user=userRepository.findByEmail(email).orElse(null);
+        if(user==null){
+            return false;
+        }
+        return passwordEncoder.matches(password, user.getPassword());
     
+    };
     
 }

@@ -2,10 +2,12 @@ package com.sapana.auth.entity;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="users")
 public class User{
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -14,7 +16,8 @@ public class User{
      @Column(unique=true,nullable=false)
     private String email;
      @Column(nullable=false)
-    private String  password;
+     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;;
     @Enumerated(EnumType.STRING)
     private Role role;
     private LocalDateTime createdAt;
